@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Kalkulator Sederhana</title>
+
+<style>
+
+body{
+    font-family: Arial;
+    text-align:center;
+}
+
+.kalkulator{
+    width:250px;
+    margin:auto;
+    border:1px solid black;
+    padding:10px;
+}
+
+input{
+    width:95%;
+    height:40px;
+    margin-bottom:10px;
+    text-align:right;
+}
+
+button{
+    width:50px;
+    height:50px;
+    margin:2px;
+}
+
+</style>
+
+</head>
+<body>
+
+<h2>Kalkulator</h2>
+
+<div class="kalkulator">
+
+<input type="text" id="hasil">
+
+<br>
+
+<button onclick="tambahAngka('7')">7</button>
+<button onclick="tambahAngka('8')">8</button>
+<button onclick="tambahAngka('9')">9</button>
+<button onclick="tambahAngka('/')">/</button>
+
+<br>
+
+<button onclick="tambahAngka('4')">4</button>
+<button onclick="tambahAngka('5')">5</button>
+<button onclick="tambahAngka('6')">6</button>
+<button onclick="tambahAngka('*')">*</button>
+
+<br>
+
+<button onclick="tambahAngka('1')">1</button>
+<button onclick="tambahAngka('2')">2</button>
+<button onclick="tambahAngka('3')">3</button>
+<button onclick="tambahAngka('-')">-</button>
+
+<br>
+
+<button onclick="tambahAngka('0')">0</button>
+<button onclick="hitung()">=</button>
+<button onclick="clearData()">C</button>
+<button onclick="tambahAngka('+')">+</button>
+
+</div>
+
+<script>
+
+function tambahAngka(nilai){
+    document.getElementById("hasil").value += nilai;
+}
+
+function hitung(){
+    let hasil = eval(document.getElementById("hasil").value);
+    document.getElementById("hasil").value = hasil;
+}
+
+function clearData(){
+    document.getElementById("hasil").value = "";
+}
+
+</script>
+
+</body>
+</html>

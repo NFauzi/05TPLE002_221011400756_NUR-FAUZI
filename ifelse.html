@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Penilaian Mahasiswa</title>
+</head>
+<body>
+
+<h2>Hasil Penilaian Mahasiswa</h2>
+
+<script>
+    let nilai = 85;
+
+    if (nilai >= 90) {
+        document.write("Grade A<br>");
+        document.write("Predikat: Sangat Memuaskan<br>");
+        document.write("Status: Lulus");
+    } else if (nilai >= 80) {
+        document.write("Grade B<br>");
+        document.write("Predikat: Memuaskan<br>");
+        document.write("Status: Lulus");
+    } else if (nilai >= 70) {
+        document.write("Grade C<br>");
+        document.write("Predikat: Cukup<br>");
+        document.write("Status: Lulus");
+    } else if (nilai >= 60) {
+        document.write("Grade D<br>");
+        document.write("Predikat: Kurang<br>");
+        document.write("Status: Tidak Lulus");
+    } else {
+        document.write("Grade E<br>");
+        document.write("Predikat: Sangat Kurang<br>");
+        document.write("Status: Tidak Lulus");
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Function Diskon</title>
+</head>
+<body>
+
+<script>
+
+function hitungTotal(harga, jumlah){
+
+    let total = harga * jumlah;
+
+    if(total >= 500000){
+        total = total - (total * 0.1);
+    }
+
+    return total;
+}
+
+let hasil = hitungTotal(100000, 6);
+
+document.write("Total Bayar : Rp " + hasil);
+
+</script>
+
+</body>
+</html>
