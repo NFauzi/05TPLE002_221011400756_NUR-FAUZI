@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Mahasiswa</title>
+</head>
+<body>
+    <script>
+        // Class Mahasiswa
+        class Mahasiswa {
+            constructor(nim, nama, prodi, fakultas) {
+                this.nim = nim;
+                this.nama = nama;
+                this.prodi = prodi;
+                this.fakultas = fakultas;
+            }
+
+            // Method perkenalan
+            perkenalan() {
+                console.log(`Halo, nama saya ${this.nama}, NIM saya ${this.nim}, saya berasal dari program studi ${this.prodi} di fakultas ${this.fakultas}.`);
+            }
+
+            // Method untuk mengembalikan nama mahasiswa
+            getNama() {
+                return this.nama;
+            }
+        }
+
+        // Membuat objek Mahasiswa
+        const mahasiswa1 = new Mahasiswa(
+            '123456789',
+            'Andi',
+            'Informatika',
+            'Teknik'
+        );
+
+        // Memanggil properti
+        console.log(mahasiswa1.nama);
+        console.log(mahasiswa1.nim);
+        console.log(mahasiswa1.prodi);
+        console.log(mahasiswa1.fakultas);
+
+        // Memanggil method
+        mahasiswa1.perkenalan();
+        console.log(mahasiswa1.getNama());
+
+        // Class MahasiswaBeasiswa
+        class MahasiswaBeasiswa extends Mahasiswa {
+            constructor(nim, nama, prodi, fakultas, beasiswa) {
+                super(nim, nama, prodi, fakultas);
+                this.beasiswa = beasiswa;
+            }
+
+            // Method informasi beasiswa
+            infoBeasiswa() {
+                console.log(`Mahasiswa ${this.nama} menerima beasiswa ${this.beasiswa}.`);
+            }
+        }
+
+        // Membuat objek MahasiswaBeasiswa
+        const mahasiswa2 = new MahasiswaBeasiswa(
+            '987654321',
+            'Budi',
+            'Sistem Informasi',
+            'Teknik',
+            'Bidikmisi'
+        );
+
+        // Memanggil method
+        mahasiswa2.perkenalan();
+        mahasiswa2.infoBeasiswa();
+    </script>
+</body>
+</html>

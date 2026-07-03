@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Kasir Penjualan</title>
+    <!-- Framework Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Icon FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-100 font-sans antialiased text-slate-800">
+
+    <div class="min-h-screen flex flex-col">
+        <!-- Bagian Navbar -->
+        <header class="bg-white border-b border-slate-300 p-4 flex justify-between items-center shadow">
+            <div class="flex items-center gap-3">
+                <div class="bg-blue-600 text-white p-2 rounded-md shadow-md">
+                    <i class="fa-solid fa-store text-xl"></i>
+                </div>
+                <h1 class="text-xl font-bold tracking-tight text-slate-700">CyberMart</h1>
+            </div>
+            <div>
+                <p id="waktu-sekarang" class="text-sm font-medium text-slate-500"></p>
+            </div>
+        </header>
+
+        <!-- Area Konten Utama -->
+        <main class="flex-1 w-full max-w-7xl mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Kolom Kiri: Form Input -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Card Input Barang -->
+                <div class="bg-white rounded-md shadow-sm border border-slate-200 p-6">
+                    <h2 class="text-base font-bold text-slate-700 mb-4 flex items-center">
+                        <i class="fa-solid fa-box-open text-blue-500 mr-2"></i> Data Pembelian
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-500 uppercase mb-2">Pilih Barang</label>
+                            <select id="nama-barang" onchange="setHargaBarang()" class="w-full bg-slate-50 border border-slate-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                                <option value="Laptop Pro X1">Laptop Pro X1</option>
+                                <option value="Monitor UltraWide 34&quot;">Monitor UltraWide 34"</option>
+                                <option value="Wireless Mouse Ergonomic">Wireless Mouse Ergonomic</option>
+                                <option value="Mechanical Keyboard">Mechanical Keyboard</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-500 uppercase mb-2">Harga (Rp)</label>
+                            <input type="number" id="harga-barang" value="12500000" disabled class="w-full bg-slate-200 border border-slate-300 rounded-md px-3 py-2 text-sm text-slate-600 cursor-not-allowed">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-500 uppercase mb-2">Jumlah Beli</label>
+                            <input type="number" id="qty-barang" value="1" min="1" class="w-full bg-slate-50 border border-slate-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Diskon & Pembayaran -->
+                <div class="bg-white rounded-md shadow-sm border border-slate-200 p-6">
+                    <h2 class="text-base font-bold text-slate-700 mb-4 flex items-center">
+                        <i class="fa-solid fa-tags text-blue-500 mr-2"></i> Promo & Pembayaran
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-500 uppercase mb-2">Kode Kupon</label>
+                            <input type="text" id="input-kupon" placeholder="Ketik MYMY" class="w-full bg-slate-50 border border-slate-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none uppercase">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-500 uppercase mb-2">Status Keanggotaan</label>
+                            <select id="status-member" class="w-full bg-slate-50 border border-slate-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                                <option value="NONE">Bukan Member</option>
+                                <option value="SILVER">Silver (Potongan 5%)</option>
+                                <option value="GOLD">Gold (Potongan 10%)</option>
+                                <option value="PLATINUM">Platinum (Potongan 15%)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-500 uppercase mb-2">Uang Diterima</label>
+                            <input type="number" id="uang-diterima" value="15000000" class="w-full bg-slate-50 border border-slate-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-green-500 outline-none text-green-700 font-bold">
+                        </div>
+                    </div>
+                    
+                    <button onclick="hitungTransaksi()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-md transition duration-200 flex justify-center items-center">
+                        <i class="fa-solid fa-calculator mr-2"></i> Proses Transaksi
+                    </button>
+                </div>
+
+                <!-- Log Layar Terminal -->
+                <div class="bg-slate-800 rounded-md p-4 text-slate-300 font-mono text-sm shadow-inner relative">
+                    <div class="flex justify-between items-center border-b border-slate-600 pb-2 mb-2">
+                        <span class="text-xs text-slate-400 uppercase font-sans font-bold">Log Sistem</span>
+                        <span class="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse"></span>
+                    </div>
+                    <div id="log-sistem" class="space-y-1.5 break-words">
+                        <span class="text-slate-500">Menunggu input kasir...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kolom Kanan: Struk Digital -->
+            <div class="space-y-6">
+                <div class="bg-white rounded-md shadow-md border border-slate-200 p-6 relative">
+                    
+                    <div class="border-b-2 border-dotted border-slate-300 pb-4 mb-4 text-center">
+                        <h2 class="font-black text-slate-800 text-2xl uppercase">INVOICE CYBERMART</h2>
+                        <p class="text-xs text-slate-500 mt-1">Tanggal: <span id="tanggal-struk"></span></p>
+                    </div>
+
+                    <!-- Detail Belanja -->
+                    <div class="space-y-3 border-b border-dotted border-slate-300 pb-4 mb-4 text-sm">
+                        <div class="flex justify-between font-bold text-slate-700">
+                            <span id="cetak-nama-barang">Item (0x)</span>
+                            <span id="cetak-subtotal">Rp 0</span>
+                        </div>
+                        <div class="flex justify-between text-orange-500 text-xs pl-2">
+                            <span>Promo Member <span id="cetak-persen-member">0%</span></span>
+                            <span id="cetak-diskon-member">-Rp 0</span>
+                        </div>
+                        <div class="flex justify-between text-green-600 text-xs pl-2">
+                            <span>Klaim Kupon</span>
+                            <span id="cetak-diskon-kupon">-Rp 0</span>
+                        </div>
+                        <div class="flex justify-between text-red-500 text-xs pl-2">
+                            <span>Pajak (PPN 11%)</span>
+                            <span id="cetak-pajak">+Rp 0</span>
+                        </div>
+                    </div>
+
+                    <!-- Total Bayar -->
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-base font-bold text-slate-700">TOTAL TAGIHAN</span>
+                        <span class="text-xl font-black text-blue-600" id="cetak-total-tagihan">Rp 0</span>
+                    </div>
+
+                    <!-- Rincian Kas -->
+                    <div class="bg-slate-100 rounded-md p-3 space-y-2 text-xs mb-6">
+                        <div class="flex justify-between text-slate-600">
+                            <span>Tunai Diberikan</span>
+                            <span class="font-bold" id="cetak-tunai">Rp 0</span>
+                        </div>
+                        <div class="flex justify-between border-t border-slate-300 pt-2">
+                            <span class="font-semibold" id="label-kembalian">Kembalian</span>
+                            <span class="font-black text-green-600" id="cetak-kembalian">Rp 0</span>
+                        </div>
+                    </div>
+
+                    <!-- Indikator Tambahan -->
+                    <div class="space-y-2">
+                        <div id="info-ongkir" class="flex items-center p-2 rounded text-xs font-semibold bg-slate-100 text-slate-500 hidden">
+                            <i class="fa-solid fa-truck mr-2"></i>
+                            <span id="teks-ongkir">-</span>
+                        </div>
+                        <div id="info-poin" class="flex items-center p-2 rounded text-xs font-semibold bg-slate-100 text-slate-500 hidden">
+                            <i class="fa-solid fa-star mr-2"></i>
+                            <span id="teks-poin">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Script Logika JavaScript -->
+    <script>
+        // Data Barang
+        const daftarBarang = {
+            "Laptop Pro X1": 12500000,
+            "Monitor UltraWide 34\"": 4800000,
+            "Wireless Mouse Ergonomic": 500000,
+            "Mechanical Keyboard": 1200000
+        };
+
+        // Konfigurasi Tanggal
+        const formatWaktu = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        let waktuSkrg = new Date().toLocaleDateString('id-ID', formatWaktu);
+        document.getElementById('waktu-sekarang').innerText = waktuSkrg;
+        document.getElementById('tanggal-struk').innerText = waktuSkrg;
+
+        // Fungsi Ganti Harga
+        function setHargaBarang() {
+            let pilihan = document.getElementById('nama-barang').value;
+            document.getElementById('harga-barang').value = daftarBarang[pilihan];
+        }
+
+        // Fungsi Hitung Utama (Mengikuti Aturan Operator Dosen)
+        function hitungTransaksi() {
+            // Ambil Inputan
+            const namaBeli = document.getElementById('nama-barang').value;
+            const harga = parseInt(document.getElementById('harga-barang').value);
+            const jumlahBeli = parseInt(document.getElementById('qty-barang').value);
+            const inputKupon = document.getElementById('input-kupon').value.trim().toUpperCase();
+            const tipeKeanggotaan = document.getElementById('status-member').value;
+            const nominalBayar = parseInt(document.getElementById('uang-diterima').value) || 0;
+
+            let logTerminal = "";
+            const catatLog = (pesan, tipe = "biasa") => {
+                let warna = "text-blue-400";
+                if(tipe === "ok") warna = "text-green-400";
+                if(tipe === "gagal") warna = "text-red-400";
+                logTerminal += `<div><span class="text-slate-500">></span> <span class="${warna}">${pesan}</span></div>`;
+            };
+
+            // Implementasi Operator Aritmatika Perkalian
+            let totalSementara = harga * jumlahBeli;
+            
+            // Logika Diskon Member
+            let persenDiskon = 0;
+            let labelPersen = "0%";
+            if (tipeKeanggotaan === "SILVER") { persenDiskon = 0.05; labelPersen = "5%"; }
+            else if (tipeKeanggotaan === "GOLD") { persenDiskon = 0.10; labelPersen = "10%"; }
+            else if (tipeKeanggotaan === "PLATINUM") { persenDiskon = 0.15; labelPersen = "15%"; }
+            
+            let potonganKeanggotaan = totalSementara * persenDiskon;
+
+            // Implementasi Operator Perbandingan Identik (Voucher MYMY)
+            let potonganKupon = 0;
+            if (inputKupon !== "") {
+                if (inputKupon === "MYMY" && totalSementara >= 3000000) {
+                    potonganKupon = 250000;
+                    catatLog(`Validasi sukses: Kupon MYMY diterapkan!`, "ok");
+                } else {
+                    catatLog(`Kupon ditolak: Kode salah atau belanja < Rp3.000.000`, "gagal");
+                }
+            }
+
+            // Implementasi Operator Pengurangan & Perkalian (Pajak)
+            let dasarKenaPajak = totalSementara - potonganKeanggotaan - potonganKupon;
+            let nilaiPPN = dasarKenaPajak * 0.11;
+
+            // Implementasi Operator Penugasan (Sesuai PDF)
+            let totalAkhir = totalSementara;
+            totalAkhir -= potonganKeanggotaan;
+            totalAkhir -= potonganKupon;
+            totalAkhir += nilaiPPN;
+
+            // Kalkulasi Kembalian
+            let sisaUang = nominalBayar - totalAkhir;
+            let statusLunas = nominalBayar >= totalAkhir;
+
+            // Implementasi Sistem Reward (Operator *=)
+            let poinDidapat = Math.floor(totalAkhir / 100000);
+            if (tipeKeanggotaan === "PLATINUM") {
+                poinDidapat *= 2; 
+            }
+
+            // Implementasi Pengecekan Ongkir
+            let limitOngkir = 5000000;
+            let bebasOngkir = totalAkhir >= limitOngkir;
+
+            // --- RENDER KE TAMPILAN STRUK ---
+            document.getElementById('cetak-nama-barang').innerText = `${namaBeli} (${jumlahBeli}x)`;
+            document.getElementById('cetak-subtotal').innerText = `Rp ${totalSementara.toLocaleString('id-ID')}`;
+            
+            document.getElementById('cetak-persen-member').innerText = labelPersen;
+            document.getElementById('cetak-diskon-member').innerText = `-Rp ${potonganKeanggotaan.toLocaleString('id-ID')}`;
+            document.getElementById('cetak-diskon-kupon').innerText = `-Rp ${potonganKupon.toLocaleString('id-ID')}`;
+            document.getElementById('cetak-pajak').innerText = `+Rp ${nilaiPPN.toLocaleString('id-ID')}`;
+            document.getElementById('cetak-total-tagihan').innerText = `Rp ${totalAkhir.toLocaleString('id-ID')}`;
+            document.getElementById('cetak-tunai').innerText = `Rp ${nominalBayar.toLocaleString('id-ID')}`;
+
+            // Status Lunas / Kurang Bayar
+            const elKembalian = document.getElementById('cetak-kembalian');
+            const lblKembalian = document.getElementById('label-kembalian');
+            
+            if (statusLunas) {
+                lblKembalian.innerText = "Kembalian";
+                elKembalian.innerText = `Rp ${sisaUang.toLocaleString('id-ID')}`;
+                elKembalian.className = "font-black text-green-600";
+            } else {
+                lblKembalian.innerText = "Kekurangan Bayar";
+                elKembalian.innerText = `-Rp ${Math.abs(sisaUang).toLocaleString('id-ID')}`;
+                elKembalian.className = "font-black text-red-600 animate-pulse";
+                catatLog("Peringatan: Nominal pembayaran tidak cukup!", "gagal");
+            }
+
+            // Notifikasi Ongkir
+            const wadahOngkir = document.getElementById('info-ongkir');
+            const teksOngkir = document.getElementById('teks-ongkir');
+            wadahOngkir.classList.remove('hidden');
+            
+            if (bebasOngkir) {
+                wadahOngkir.className = "flex items-center p-2 rounded text-xs font-semibold bg-green-100 text-green-700";
+                teksOngkir.innerText = "Layanan Gratis Ongkir Tersedia";
+            } else {
+                let selisihOngkir = limitOngkir - totalAkhir;
+                wadahOngkir.className = "flex items-center p-2 rounded text-xs font-semibold bg-orange-100 text-orange-700";
+                teksOngkir.innerText = `Tambah Rp ${selisihOngkir.toLocaleString('id-ID')} untuk Gratis Ongkir`;
+            }
+
+            // Notifikasi Poin
+            const wadahPoin = document.getElementById('info-poin');
+            const teksPoin = document.getElementById('teks-poin');
+            wadahPoin.classList.remove('hidden');
+
+            if (poinDidapat > 0) {
+                wadahPoin.className = "flex items-center p-2 rounded text-xs font-semibold bg-blue-100 text-blue-700";
+                teksPoin.innerText = `Anda meraih ${poinDidapat} Poin Belanja`;
+            } else {
+                wadahPoin.className = "flex items-center p-2 rounded text-xs font-semibold bg-slate-100 text-slate-500";
+                teksPoin.innerText = "Tidak ada penambahan poin";
+            }
+
+            if(logTerminal === "") logTerminal = `<span class="text-slate-400">Proses kalkulasi selesai...</span>`;
+            document.getElementById('log-sistem').innerHTML = logTerminal;
+        }
+
+        // Jalankan saat pertama kali halaman dibuka
+        window.onload = function() {
+            setHargaBarang();
+        }
+    </script>
+</body>
+</html>
